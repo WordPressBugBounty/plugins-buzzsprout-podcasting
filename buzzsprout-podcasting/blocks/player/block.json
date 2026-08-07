@@ -1,0 +1,46 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "buzzsprout/player",
+	"title": "Buzzsprout Player",
+	"category": "embed",
+	"icon": "controls-play",
+	"description": "Embed a podcast episode from your Buzzsprout show — a specific one, or always the latest.",
+	"keywords": [
+		"podcast",
+		"audio",
+		"episode",
+		"buzzsprout"
+	],
+	"textdomain": "buzzsprout-podcasting",
+	"attributes": {
+		"mode": {
+			"type": "string",
+			"default": "latest"
+		},
+		"episodeId": {
+			"type": "string",
+			"default": ""
+		},
+		"episodeTitle": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"align": [
+			"wide",
+			"full"
+		],
+		"html": false,
+		"spacing": {
+			"margin": true
+		}
+	},
+	"example": {
+		"attributes": {
+			"mode": "latest"
+		}
+	},
+	"editorScript": "buzzsprout-player-editor"
+}

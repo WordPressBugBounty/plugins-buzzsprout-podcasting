@@ -1,0 +1,66 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "buzzsprout/episode-list",
+	"title": "Buzzsprout Episode List",
+	"category": "embed",
+	"icon": "playlist-audio",
+	"description": "Show your episodes as a playlist player or an expandable list, updated automatically as you publish.",
+	"keywords": [
+		"podcast",
+		"episodes",
+		"playlist",
+		"buzzsprout"
+	],
+	"textdomain": "buzzsprout-podcasting",
+	"attributes": {
+		"display": {
+			"type": "string",
+			"default": "playlist"
+		},
+		"count": {
+			"type": "number",
+			"default": 5
+		},
+		"playlistCount": {
+			"type": "number",
+			"default": 0
+		},
+		"tags": {
+			"type": "string",
+			"default": ""
+		},
+		"showDates": {
+			"type": "boolean",
+			"default": true
+		},
+		"showDurations": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"supports": {
+		"align": [
+			"wide",
+			"full"
+		],
+		"html": false,
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"color": {
+			"text": true,
+			"background": true
+		}
+	},
+	"example": {
+		"attributes": {
+			"display": "list",
+			"count": 3
+		}
+	},
+	"editorScript": "buzzsprout-episode-list-editor",
+	"style": "file:./style.css",
+	"viewScript": "file:./view.js"
+}

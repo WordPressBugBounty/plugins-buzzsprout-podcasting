@@ -1,0 +1,58 @@
+.buzzsprout-episode-list__items {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.buzzsprout-episode-list__item {
+	margin: 0;
+	border-bottom: 1px solid rgba(128, 128, 128, 0.25);
+}
+
+.buzzsprout-episode-list__toggle {
+	display: grid;
+	grid-template-columns: 1.4em 1fr;
+	align-items: baseline;
+	width: 100%;
+	background: none;
+	border: 0;
+	padding: 0.85em 0.25em;
+	margin: 0;
+	text-align: inherit;
+	font: inherit;
+	color: inherit;
+	cursor: pointer;
+}
+
+.buzzsprout-episode-list__toggle:hover .buzzsprout-episode-list__name,
+.buzzsprout-episode-list__toggle:focus-visible .buzzsprout-episode-list__name {
+	text-decoration: underline;
+}
+
+/* The arrow inherits the text color, like core's Details block marker. */
+.buzzsprout-episode-list__toggle::before {
+	content: "\25B8";
+	grid-column: 1;
+	transition: transform 0.15s ease;
+}
+
+.buzzsprout-episode-list__toggle[aria-expanded="true"]::before {
+	transform: rotate(90deg);
+}
+
+.buzzsprout-episode-list__name {
+	grid-column: 2;
+	font-weight: 600;
+}
+
+.buzzsprout-episode-list__meta {
+	display: block;
+	grid-column: 2;
+	font-size: 0.85em;
+	opacity: 0.75;
+	margin: 0.25em 0 0;
+}
+
+.buzzsprout-episode-list__player {
+	padding: 0 0.25em 1em;
+}

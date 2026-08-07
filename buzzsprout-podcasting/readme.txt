@@ -1,71 +1,103 @@
 === Buzzsprout Podcasting ===
 Contributors: molehill
-Donate link: http://www.buzzsprout.com/
-Tags: audio, audio player, Blubrry, buzzsprout, castmyblog, embed, enclosure, episode, episodes, feed, feedburner, flash, flv, id3, HTML5, HTML5 audio, iphone, iTunes, m4v, media, mediacaster, media player, mp3, MP4, music, player, plugin, podbean, podcast, podcast.de, podcaster, podcasting, podlove, post, posts, rss, rss2, seriously simple podcasting, simple, simple podcasting, social, soundcloud, statistics, stats, webm, WP-boxCast, youtube, zune
-Requires at least: 2.7
-Tested up to: 6.6.2
-Stable tag: 1.8.7
+Donate link: https://www.buzzsprout.com/
+Tags: podcast, podcasting, audio, episode, buzzsprout
+Requires at least: 6.2
+Tested up to: 7.0
+Requires PHP: 7.4
+Stable tag: 2.0.2
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Pull podcast episodes from your Buzzsprout account and quickly add them to your blog posts with beautiful HTML5 audio players.
+The official Buzzsprout plugin. Embed your podcast episodes with editor blocks that always stay up to date with your show.
 
 == Description ==
-[Buzzsprout](http://www.buzzsprout.com) is the best way to publish a podcast online. From secure and reliable hosting to full iTunes support, HTML5 players, show statistics, and of course, this WordPress plugin, Buzzsprout has everything you need to publish and promote your podcast!
 
-= The Buzzsprout WordPress Plugin =
-The Buzzsprout podcasting plugin fetches your podcast episodes from your Buzzsprout feed URL and gives you the option to embed episodes in your page or post on-the-fly. It really is that simple.
+[Buzzsprout](https://www.buzzsprout.com) is the easiest way to host, promote, and track your podcast. This is the **official Buzzsprout plugin for WordPress**: connect your show once with your RSS feed URL, then embed episodes anywhere on your site using native editor blocks.
 
-* Comes free with all Buzzsprout plans
-* Is easy to install into your WordPress dashboard
-* Works with all self hosted (WordPress.org) accounts
+= Buzzsprout Player block =
 
-You can learn more about Buzzsprout and create a FREE account at
-[www.buzzsprout.com](http://www.buzzsprout.com).
+Embed any episode with Buzzsprout's audio player.
 
-= More reasons you’ll love Buzzsprout: =
+* **Always play the latest episode** — set it once and your page updates itself every time you publish
+* Or pick a specific episode with a searchable picker covering your whole catalog
+* Live player preview right in the editor
+* Paste an old `[buzzsprout]` shortcode and it converts to a Player block automatically
 
-= Secure Hosting Dedicated to Your Podcast =
-Whether you have a large show or you’re just getting started, a hosting provider is an important piece to a successful podcast. Why? It’s built specifically for your podcast. From upload speeds to download speeds, audio optimization, tagging and show statistics, Buzzsprout helps your podcast grow.
+= Buzzsprout Episode List block =
 
-= Complete iTunes Support =
-A full interactive walkthrough on how to submit your podcast feed to iTunes and get your podcast published in the world’s largest podcast catalog.
+Show your episodes, your way:
 
-* iTunes podcast specifications support
-* Byte-range request support
-* Optimized show description and tagging
-* Upload iTunes artwork
+* **Playlist player** — Buzzsprout's multi-episode player; show all episodes or the 5, 10, or 20 most recent
+* **Simple list** — a clean, theme-matching list of titles with dates and durations; visitors click an episode to expand its player in place
+* **Filter by tags** — either display can be limited to episodes with specific tags, so you can build pages per topic or season
 
-= Podcast Migration Tool =
-Want to switch from your old podcast hosting server?  Buzzsprout’s podcast migration tool lets you drop your feed URL in Buzzsprout, then takes care of the rest.
+Both blocks preview live in the editor, work in the Site Editor and block themes, support wide/full alignment and spacing controls, and inherit your theme's colors.
 
-= FeedBurner =
-Buzzsprout allows you to have as much control over your RSS feed as you want by providing you with a feed that can be run through FeedBurner.
+= Classic tools, still supported =
 
-= HTML5 and Flash Audio Players =
-Choose from 3 HTML5 and Flash audio players to embed in your wordpress site. All players automatically update every time you publish a new episode.
+* The `[buzzsprout episode='123']` shortcode from earlier versions keeps working unchanged
+* Classic-editor users can still pick episodes from the Add Media window
 
-= Play Count Statistics =
-Tracking your show’s growth is important. Buzzsprout provides statistics like podcast plays over time, all time plays, and play count trend so you can see the response to each episode over time.
+= Setup =
 
-= Want to Learn More About Starting a Podcast? =
-Learn how with Buzzsprout’s free [how to create a podcast guide](http://www.buzzsprout.com/resources/how-to-start-your-own-podcast/).
+No API keys, no configuration maze: paste your Buzzsprout RSS feed URL (Settings → Buzzsprout Podcasting) and you're done. Episodes are fetched from your feed and cached for 15 minutes.
+
+You can learn more about Buzzsprout and create a FREE account at [www.buzzsprout.com](https://www.buzzsprout.com).
 
 == Installation ==
-1. Download the plugin
-2. Extract into a folder
-3. Upload the entire folder to `wp-content/plugins/` directory of your WordPress installation
-4. Enable it via Plugins panel
-5. Specify the Buzzsprout feed URL you want to retrieve episodes from and other options under Settings->Buzzsprout Podcasting
+
+1. Install the plugin from the WordPress plugin directory and activate it
+2. Go to Settings → Buzzsprout Podcasting and paste your Buzzsprout RSS feed URL (find it in your Buzzsprout dashboard under Directories)
+3. Add the **Buzzsprout Player** or **Buzzsprout Episode List** block to any post, page, or template
+
+== Frequently Asked Questions ==
+
+= Where do I find my RSS feed URL? =
+
+Log in to your Buzzsprout account and open the Directories section — your feed URL looks like `https://feeds.buzzsprout.com/123456.rss`.
+
+= Do my old shortcodes still work? =
+
+Yes. Everything embedded with earlier versions of this plugin keeps working exactly as before. You can also paste an old shortcode into the block editor and it becomes a Player block automatically.
+
+= How quickly do new episodes appear? =
+
+Your feed is cached for 15 minutes, so new episodes (and tag changes) show up on your site within 15 minutes of publishing.
+
+= How does tag filtering work? =
+
+Add tags to your episodes in Buzzsprout, then enter the same tags (comma-separated) in the Episode List block's settings. Only episodes with at least one matching tag are shown — handy for topic or season pages.
+
+= Does the player match my theme? =
+
+The Buzzsprout player keeps its own look, but the simple list display inherits your theme's typography and colors, and supports the standard block color controls.
 
 == Screenshots ==
-1. Buzzsprout’s simple wordpress plugin sits in your “add media” bin and fetches episodes from your Buzzsprout account for easy embedding into your pages or posts.
-2. More than just a plugin, Buzzsprout provides beautifully designed HTML5 Audio Players (with Flash and Silverlight fallback) options for embedding.
-3. The large player automatically updates with your newest episodes and can be customized to only fetch episodes with specific tags.
 
-= Usage =
-1. The Buzzsprout Podcasting plugin drops a new option into your "Add Media" window. Click the add media icon and then select the "Buzzsprout Podcasting" tab to select the episode you would like to include within your post.
-2. Once you select the episode you would like to include, a shortcode will be added to your post. You can feel free to move this around, to wherever you would like the episode to appear within your post.
+1. The Buzzsprout Player block — pick any episode with live preview, or set it to always play your latest
+2. The Episode List block as Buzzsprout's multi-episode playlist player
+3. The Episode List block as a simple list — episodes expand and play in place
+4. Settings — just paste your RSS feed URL
 
 == Changelog ==
+
+= 2.0.2 =
+* Changed: thematic block icons on the WordPress.org plugin page (the Blocks section supports Dashicons only; editor keeps the Buzzsprout brand icons)
+
+= 2.0.1 =
+* Fixed: Buzzsprout brand icons now shown for the blocks on the WordPress.org plugin page
+
+= 2.0.0 =
+* New: Buzzsprout Player block — "always play the latest episode" mode, plus a searchable episode picker with live editor preview
+* New: Buzzsprout Episode List block — playlist player (all/5/10/20 most recent) or an expandable simple list, both filterable by episode tags
+* New: paste a legacy [buzzsprout] shortcode into the editor and it converts to a Player block; Player and Episode List blocks transform into each other
+* Improved: episode feed cached for 15 minutes instead of re-fetched on every request
+* Improved: alignment, spacing, and color block controls; refreshed settings page; translation-ready with the standard text domain
+* Fixed: feed URLs on the rss.buzzsprout.com hostname are now accepted
+* Fixed: hardened input sanitization and output escaping throughout
+* The [buzzsprout] shortcode and classic-editor media tab keep working as before
+
 = 1.8.7 =
 * Fix for shortcode tag insertion bug
 
@@ -90,120 +122,9 @@ Learn how with Buzzsprout’s free [how to create a podcast guide](http://www.bu
 = 1.8 =
 * Fix for RSS items not loading
 
-= 1.7 =
-* Fix for MIME type bug
-
-= 1.6 =
-* Improved support for page caching
-
-= 1.5 =
-* Compatibility with prefix urls
-
-= 1.4 =
-* Updated for latest version of WordPress 5.2.3
-
-= 1.3.2 =
-* Buzzsprout has a new format for RSS Feed URLs.
-* Please install this update and then log into your Buzzsprout account to get your new feed URL.
-* Feed URLs now start with https://feeds.buzzsprout.com/...
-
-= 1.3.1 =
-* Updated for new Buzzsprout feed URLs.
-
-= 1.3 =
-* Updated for latest version of WordPress 4.9.5
-
-= 1.2.8 =
-* Update for latest RSS feed validator
-
-= 1.2.7 =
-* Update for latest WordPress with https support
-* https fix
-
-= 1.2.6 =
-* Fix to work with new GUID
-
-= 1.2.5 =
-* Updated code for latest wordpress
-
-= 1.2.4 =
-* Enhancement for latest wordpress build
-
-= 1.2.3 =
-* Added a few new icons and a link to review the plugin
-
-= 1.2.2 =
-* Resolved an issue where latest episodes were not appearing immediately
-
-= 1.2.1 =
-* Updated for Buzzsprout new HTML5 Audio Player
-* Compatability update for PHP 5.4x
-
-= 1.2 =
-* Reworked the plugin to adhere to changes to WordPress core when version 3.3.1 was released.
-* Now adds a tab to the media upload Thickbox
-
-= 1.0.1 =
-* New episodes are now immediately available - prevents RSS cache
-
-= 1.0 =
-* Initial version
+For older releases, see the full changelog in the plugin repository.
 
 == Upgrade Notice ==
 
-= 1.8.5 =
-Updated for latest version of WordPress 6.4
-
-= 1.8.5 =
-Updated to sanitize shortcodes
-
-= 1.8.4 =
-Updated for latest version of WordPress 6.2.3
-
-= 1.8.2 =
-Updated for latest version of WordPress 5.4
-
-= 1.8.1 =
-Fix for episode selection bug
-
-= 1.8 =
-Fix for RSS items not loading
-
-= 1.7 =
-Fix for MIME type bug
-
-= 1.6 =
-Improved support for page caching
-
-= 1.5 =
-Compatibility with prefix urls
-
-= 1.4 =
-Updated for latest version of WordPress 5.2.3
-
-= 1.3.2 =
-Buzzsprout has a new format for RSS Feed URLs. Please install this update and then log into your Buzzsprout account to get your new feed URL. It will start with https://feeds.buzzsprout.com/...
-
-= 1.3.1 =
-Buzzsprout has a new format for RSS Feed URLs. Please install this update and then log into your Buzzsprout account to get your new feed URL. It will start with https://feeds.buzzsprout.com/...
-
-= 1.3 =
-Updated for latest version of WordPress 4.9.5
-
-= 1.2.8 =
-This version fixes an issue with validating RSS feeds.
-
-= 1.2.7 =
-This version fixes an issue where your shortcode may not work if your site runs https.
-
-= 1.2.2 =
-This version fixes an issue where your latest episode may not appear within your media browser immediately.
-
-= 1.2.1 =
-This version fixes an issue when running PHP 5.4x
-
-= 1.2 =
-This version fixes the issue where the icon would not display and changed the implementation to add a new tab to the media upload tabbed Thickbox.
-
-= 1.0.1 =
-This version fixes an issue where newly uploaded episodes would not immediately show up on the episode list within WordPress.
+= 2.0.0 =
+Major update: the official Buzzsprout plugin now ships editor blocks — player with latest-episode mode, playlist, and episode list with tag filtering. Existing shortcodes keep working.
