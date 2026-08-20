@@ -49,12 +49,12 @@ class Buzzsprout_Podcasting {
 
 	public static function enqueue_scripts() {
 		wp_enqueue_style( 'buzzsprout-podcasting-admin', plugins_url( 'css/admin.css', BUZZSPROUT_PODCASTING_FILE ), false, BUZZSPROUT_PODCASTING_VERSION );
-		wp_enqueue_script( 'buzzsprout-podcasting-admin', plugins_url( 'js/admin-onload.js', BUZZSPROUT_PODCASTING_FILE ), array( 'jquery', 'media-upload' ), BUZZSPROUT_PODCASTING_VERSION );
+		wp_enqueue_script( 'buzzsprout-podcasting-admin', plugins_url( 'js/admin-onload.js', BUZZSPROUT_PODCASTING_FILE ), array( 'jquery', 'media-upload' ), BUZZSPROUT_PODCASTING_VERSION, false );
 	}
 
 	public static function enqueue_media_tab_style() {
 		wp_enqueue_style( 'buzzsprout-podcasting-admin', plugins_url( 'css/admin.css', BUZZSPROUT_PODCASTING_FILE ), false, BUZZSPROUT_PODCASTING_VERSION );
-		wp_enqueue_script( 'buzzsprout-podcasting-box', plugins_url( 'js/box.js', BUZZSPROUT_PODCASTING_FILE ), array( 'jquery' ), BUZZSPROUT_PODCASTING_VERSION );
+		wp_enqueue_script( 'buzzsprout-podcasting-box', plugins_url( 'js/box.js', BUZZSPROUT_PODCASTING_FILE ), array( 'jquery' ), BUZZSPROUT_PODCASTING_VERSION, false );
 	}
 
 	/**
@@ -247,12 +247,20 @@ class Buzzsprout_Podcasting {
 	 */
 	public static function buzzsprout_admin_notice() {
 		global $pagenow;
-		if ( 'options-general.php' !== $pagenow || ! isset( $_GET['page'] ) || self::PLUGIN_SLUG !== $_GET['page'] ) {
+
+		// These query args only decide whether to show a notice after
+		// options.php has already saved and redirected; no form data is
+		// processed here, so there is nothing to nonce-verify.
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended
+		$page            = isset( $_GET['page'] ) ? sanitize_key( wp_unslash( $_GET['page'] ) ) : '';
+		$updated         = isset( $_GET['updated'] ) ? sanitize_key( wp_unslash( $_GET['updated'] ) ) : '';
+		$settings_updated = isset( $_GET['settings-updated'] ) ? sanitize_key( wp_unslash( $_GET['settings-updated'] ) ) : '';
+		// phpcs:enable WordPress.Security.NonceVerification.Recommended
+
+		if ( 'options-general.php' !== $pagenow || self::PLUGIN_SLUG !== $page ) {
 			return;
 		}
-		$updated = ( isset( $_GET['updated'] ) && 'true' === $_GET['updated'] )
-			|| ( isset( $_GET['settings-updated'] ) && 'true' === $_GET['settings-updated'] );
-		if ( ! $updated ) {
+		if ( 'true' !== $updated && 'true' !== $settings_updated ) {
 			return;
 		}
 

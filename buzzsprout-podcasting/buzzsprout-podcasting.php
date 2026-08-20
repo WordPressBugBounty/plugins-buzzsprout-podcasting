@@ -3,7 +3,7 @@
 Plugin Name: Buzzsprout Podcasting
 Plugin URI: https://www.buzzsprout.com/wordpress
 Description: The official Buzzsprout plugin. Embed your podcast episodes with editor blocks that always stay up to date with your show.
-Version: 2.0.2
+Version: 2.0.3
 Requires at least: 6.2
 Requires PHP: 7.4
 Author: Buzzsprout
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'BUZZSPROUT_PODCASTING_VERSION', '2.0.2' );
+define( 'BUZZSPROUT_PODCASTING_VERSION', '2.0.3' );
 define( 'BUZZSPROUT_PODCASTING_FILE', __FILE__ );
 define( 'BUZZSPROUT_PODCASTING_DIR', plugin_dir_path( __FILE__ ) );
 

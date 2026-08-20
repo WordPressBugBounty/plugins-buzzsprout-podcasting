@@ -3,9 +3,9 @@ Contributors: molehill
 Donate link: https://www.buzzsprout.com/
 Tags: podcast, podcasting, audio, episode, buzzsprout
 Requires at least: 6.2
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.0.2
+Stable tag: 2.0.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,6 +81,12 @@ The Buzzsprout player keeps its own look, but the simple list display inherits y
 4. Settings — just paste your RSS feed URL
 
 == Changelog ==
+
+= 2.0.3 =
+* Tested up to WordPress 7.1
+* Improved: the Buzzsprout player script is now enqueued through WordPress instead of printed inline, so it loads in the footer and follows WordPress script handling
+* Improved: embedding the same episode more than once on a page no longer reuses a DOM id
+* Fixed: WordPress Plugin Check warnings (explicit script loading position, sanitized admin query args)
 
 = 2.0.2 =
 * Changed: thematic block icons on the WordPress.org plugin page (the Blocks section supports Dashicons only; editor keeps the Buzzsprout brand icons)

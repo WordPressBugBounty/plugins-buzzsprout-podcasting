@@ -12,6 +12,11 @@ class Buzzsprout_Render {
 	/**
 	 * The standard Buzzsprout JS embed for one episode.
 	 *
+	 * On the front end the vendor script is enqueued (so it loads in the
+	 * footer, after its container exists) and only the container is returned.
+	 * Editor previews get the iframe form of the same player instead, since
+	 * enqueued scripts never reach a REST response.
+	 *
 	 * @param string $episode_id  Numeric episode ID.
 	 * @param bool   $show_player Render the audio player (vs. title link only).
 	 * @return string HTML, or '' if not renderable.
@@ -22,14 +27,29 @@ class Buzzsprout_Render {
 		if ( ! $episode_id || ! $podcast_id ) {
 			return '';
 		}
-		$player_code = $show_player ? 'player=small' : '';
 
-		return sprintf(
-			'<div id="buzzsprout-player-%1$s"></div><script src="https://www.buzzsprout.com/%2$s/episodes/%1$s.js?container_id=buzzsprout-player-%1$s&amp;%3$s" type="text/javascript" charset="utf-8"></script>',
-			esc_attr( $episode_id ),
-			esc_attr( $podcast_id ),
-			esc_attr( $player_code )
+		if ( self::is_editor_preview() ) {
+			return self::preview_iframe(
+				sprintf(
+					'https://www.buzzsprout.com/%s/episodes/%s?client_source=small_player&iframe=true',
+					rawurlencode( $podcast_id ),
+					rawurlencode( $episode_id )
+				),
+				200
+			);
+		}
+
+		$container = self::unique_container( 'buzzsprout-player-' . $episode_id );
+		$src       = sprintf(
+			'https://www.buzzsprout.com/%s/episodes/%s.js?container_id=%s%s',
+			rawurlencode( $podcast_id ),
+			rawurlencode( $episode_id ),
+			rawurlencode( $container ),
+			$show_player ? '&player=small' : ''
 		);
+
+		self::enqueue_embed( $container, $src );
+		return sprintf( '<div id="%s"></div>', esc_attr( $container ) );
 	}
 
 	/**
@@ -42,27 +62,66 @@ class Buzzsprout_Render {
 		if ( ! $podcast_id ) {
 			return '';
 		}
-		$container = wp_unique_id( 'buzzsprout-playlist-' );
 
-		$src = sprintf(
-			'https://www.buzzsprout.com/%s.js?container_id=%s&player=large',
-			rawurlencode( $podcast_id ),
-			rawurlencode( $container )
-		);
+		$params = '';
 		if ( (int) $limit > 0 ) {
-			$src .= '&limit=' . (int) $limit;
+			$params .= '&limit=' . (int) $limit;
 		}
 		$tag_list = self::parse_tags( $tags );
 		if ( $tag_list ) {
 			// Match the official embed format: "tag, tag", URL-encoded.
-			$src .= '&tags=' . rawurlencode( implode( ', ', $tag_list ) );
+			$params .= '&tags=' . rawurlencode( implode( ', ', $tag_list ) );
 		}
 
-		return sprintf(
-			'<div id="%s"></div><script src="%s" type="text/javascript" charset="utf-8"></script>',
-			esc_attr( $container ),
-			esc_url( $src )
+		if ( self::is_editor_preview() ) {
+			return self::preview_iframe(
+				sprintf(
+					'https://www.buzzsprout.com/%s?client_source=large_player&iframe=true%s',
+					rawurlencode( $podcast_id ),
+					$params
+				),
+				450
+			);
+		}
+
+		$container = self::unique_container( 'buzzsprout-playlist' );
+		$src       = sprintf(
+			'https://www.buzzsprout.com/%s.js?container_id=%s&player=large%s',
+			rawurlencode( $podcast_id ),
+			rawurlencode( $container ),
+			$params
 		);
+
+		self::enqueue_embed( $container, $src );
+		return sprintf( '<div id="%s"></div>', esc_attr( $container ) );
+	}
+
+	/**
+	 * Enqueues one Buzzsprout embed script in the footer, so it runs after its
+	 * container element exists.
+	 */
+	private static function enqueue_embed( $container, $src ) {
+		// No version is passed on purpose: this is Buzzsprout's own script and
+		// they version and cache it themselves. Appending a plugin version
+		// would tie their cache key to our release cycle.
+		// phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
+		wp_enqueue_script( 'buzzsprout-embed-' . $container, $src, array(), null, true );
+	}
+
+	/**
+	 * A DOM id that stays stable for the common single-embed case but never
+	 * repeats when the same episode is embedded more than once on a page.
+	 */
+	private static function unique_container( $base ) {
+		static $used = array();
+		$id          = $base;
+		$suffix      = 1;
+		while ( isset( $used[ $id ] ) ) {
+			++$suffix;
+			$id = $base . '-' . $suffix;
+		}
+		$used[ $id ] = true;
+		return $id;
 	}
 
 	/**
@@ -81,15 +140,14 @@ class Buzzsprout_Render {
 	}
 
 	/**
-	 * In the editor preview the JS embed cannot execute (scripts injected via
-	 * innerHTML never run), so wrap the same embed in an iframe srcdoc, where
-	 * it can.
+	 * Editor previews use Buzzsprout's iframe player: enqueued scripts never
+	 * reach a REST response, and this markup is never saved to a site.
 	 */
-	private static function preview_wrap( $embed_html, $height = 200 ) {
+	private static function preview_iframe( $src, $height = 200 ) {
 		return sprintf(
-			'<iframe class="buzzsprout-editor-preview" style="width:100%%;border:0;display:block;" height="%d" sandbox="allow-scripts allow-same-origin" srcdoc="%s"></iframe>',
-			(int) $height,
-			esc_attr( '<!doctype html><body style="margin:0">' . $embed_html . '</body>' )
+			'<iframe class="buzzsprout-editor-preview" src="%s" width="100%%" height="%d" frameborder="0" scrolling="no" style="display:block;border:0;"></iframe>',
+			esc_url( $src ),
+			(int) $height
 		);
 	}
 
@@ -162,9 +220,6 @@ class Buzzsprout_Render {
 			return self::placeholder( __( 'No valid Buzzsprout feed URL is configured.', 'buzzsprout-podcasting' ) );
 		}
 
-		if ( self::is_editor_preview() ) {
-			$embed = self::preview_wrap( $embed );
-		}
 		return self::block_wrap( $embed );
 	}
 
@@ -180,9 +235,6 @@ class Buzzsprout_Render {
 			$embed          = self::playlist_embed( $playlist_count, $tags );
 			if ( ! $embed ) {
 				return self::placeholder( __( 'No valid Buzzsprout feed URL is configured.', 'buzzsprout-podcasting' ) );
-			}
-			if ( self::is_editor_preview() ) {
-				$embed = self::preview_wrap( $embed, 450 );
 			}
 			return self::block_wrap( $embed, array( 'class' => 'buzzsprout-playlist' ) );
 		}
