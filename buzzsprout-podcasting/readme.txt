@@ -5,7 +5,7 @@ Tags: podcast, podcasting, audio, episode, buzzsprout
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.0.3
+Stable tag: 2.0.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,6 +81,9 @@ The Buzzsprout player keeps its own look, but the simple list display inherits y
 4. Settings — just paste your RSS feed URL
 
 == Changelog ==
+
+= 2.0.4 =
+* Fixed: choosing an episode from the classic Add Media → Buzzsprout Podcasting tab now closes the media window. The shortcode was being inserted behind the window with no feedback, which looked like nothing happened; in the block editor's Classic block that could lead to the insert being discarded.
 
 = 2.0.3 =
 * Tested up to WordPress 7.1
